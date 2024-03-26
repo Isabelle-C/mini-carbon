@@ -1,0 +1,56 @@
+name: Formatting
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+    # Check out the repository
+    - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.head_ref }}
+        fetch-depth: 0 # Necessary for push
+
+    # Set up Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14' # Specify the Node.js version
+
+    # Install and run Prettier for Markdown files
+    - name: Install Prettier globally
+      run: npm install -g prettier
+    - name: Run Prettier to format Markdown
+      run: prettier --write "**/*.md"
+
+    # Set up Python and install isort and black
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - name: Install isort and black
+      run: |
+        pip install isort black
+    - name: Run isort
+      run: isort . --skip-gitignore
+    - name: Run black
+      run: black . --exclude='/(\.git|\.venv|env|venv|build|dist)/'
+
+    # Commit and push changes
+    - name: Commit changes
+      run: |
+        git config --global user.name 'github-actions'
+        git config --global user.email 'github-actions@github.com'
+        git add -A
+        git diff-index --quiet HEAD || git commit -m "Apply formatting changes"
