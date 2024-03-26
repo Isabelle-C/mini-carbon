@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "mini-carbon"
+version = "0.1.0"
+description = ""
+authors = ["Isabelle-C <isabellechen2023@u.northwestern.edu>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+imgkit = "^1.2.3"
+Pygments = "^2.17.2"
+click = "^8.1.7"
+
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.29.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

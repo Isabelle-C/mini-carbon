@@ -1,0 +1,2 @@
+name = "Isabelle"
+print(f"Hello world! - from {name}")
