@@ -54,3 +54,4 @@ jobs:
         git config --global user.email 'github-actions@github.com'
         git add -A
         git diff-index --quiet HEAD || git commit -m "Apply formatting changes"
+        git push
